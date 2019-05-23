@@ -1,6 +1,6 @@
 ﻿## Initialize variables (do not forget to put your tenant and app ids )
 
-$Cert = (get-childitem 'Cert:\CurrentUser\My\' | where {$_.Subject -like "*Audit*"})
+$Cert = (get-childitem 'Cert:\CurrentUser\My\' | Where-Object {$_.Subject -like "*Audit*"})
 $TenantID = ""
 $ClientID = ""
 $authroot = "https://login.microsoftonline.com"
