@@ -1,0 +1,58 @@
+$result = import-clixml -path C:\Distr\PHdays.xml
+
+
+$result | where {$_.operation –like “*Journal*”}
+
+
+$result | where {$_.SessionID –eq “67381be3-fe74-47d6-b657-88bdd091a547"}
+
+
+$result | where {$_.UserID -eq "NewUser@m365x413039.onmicrosoft.com"} | select creationtime,operation,clientip,id | sort-object -property Creationtime
+
+
+($result | where {($_.Operation -like "*Del*") -and ($_.Objectid -like "*NewUser@m365x413039*")} ) 
+
+
+($result | where { ($_. operation -like "*add user*") -and ($_.objectid -like "*NewUser*")} ) 
+
+
+($result | where {($_.operation -like "*update*") -and ($_.objectid -like "*NewUser@m365x413039*")})| select creationtime,ObjectID,ModifiedProperties
+
+
+$result | where {($_. Operation –like “*Member*”)  -and($_.objectID –eq “NewUser@m365x413039.onmicrosoft.com”) } | sort-object –Property CreationTime -Descending
+
+
+($result | where {($_.Operation -like "*UserLoggedIn*") -and ($_.Userid -like "*demoadm*") -and ($_.CreationTime -like "2019-05-13T*")} )| select CreationTime,ClientIP,ResultStatus
+
+
+($result | where {$_.ActorIPAddress -eq "191.232.238.156"})| Sort-Object -Property CreationTime | select creationtime,Operation,ResultStatus,UserID 
+
+$IPAddress = "191.232.238.156"
+($result | where {($_.ActorIPAddress -eq "$IPaddress") -or ($_.ClientIP -eq "$IPaddress")}) | Sort-Object -Property CreationTime | ft Operation,Workload,UserID,id
+
+
+$result | where {$_.id -eq "523a0cd9-ece1-45d2-1973-08d6d76d0a52"}
+
+
+$result | where {$_.objectID -eq "https://m365x413039-my.sharepoint.com/personal/irvins_m365x413039_onmicrosoft_com/Documents/file.com.txt"}
+
+=========================================sign-on API =================================================
+
+
+$return2 = import-clixml -path C:\Distr\PHdays2.xml
+
+
+$return2.value | where {$_.ipaddress -eq "191.232.238.156"}| Sort-Object -Property CreatedDateTime |select  CreatedDateTime,AppDisplayName,ResourceDisplayName,UserDisplayName,id
+
+
+================================== Activity API =================================
+
+$return3 = import-clixml -path C:\Distr\PHDays3.xml
+
+
+$return3.value | where {$_.activitydateTime -match "2019-05-13T0[6-8]{1,1}(.)*"} | Sort-Object -Property activitydatetime | select activitydatetime,activitydisplayname,targetresources,id
+
+
+
+
+
